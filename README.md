@@ -1,4 +1,4 @@
-# OAS Tools
+# Data Algorithms
 
 ![Travis (.org)](https://img.shields.io/travis/danballance/data-algorithms.svg)
 
