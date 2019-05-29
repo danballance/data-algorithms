@@ -113,4 +113,15 @@ class OrderedListNumericTest extends \PHPUnit\Framework\TestCase
             $ol->toArray()
         );
     }
+
+    public function testInsertDuplicates()
+    {
+        $ol = new OrderedListNumeric();
+        $ol->insert(1, 3, 4, 7, 7, 10);
+        $ol->insert(3, 3);
+        $this->assertEquals(
+            [1, 3, 3, 3, 4, 7, 7, 10],
+            $ol->toArray()
+        );
+    }
 }

@@ -155,4 +155,18 @@ class OrderedListCustomTest extends \PHPUnit\Framework\TestCase
             }
         );
     }
+
+    public function testInsertDuplicates()
+    {
+        $ol = $this->getCustomList();
+        $objDog = (object)['name' => 'dog'];
+        $objCat = (object)['name' => 'cat'];
+        $objFox = (object)['name' => 'fox'];
+        $ol->insert($objDog, $objCat, $objFox);
+        $ol->insert($objDog, $objFox);
+        $this->assertEquals(
+            [$objCat, $objDog, $objDog, $objFox, $objFox],
+            $ol->toArray()
+        );
+    }
 }

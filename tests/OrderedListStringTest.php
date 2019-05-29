@@ -111,4 +111,15 @@ class OrderedListStringTest extends \PHPUnit\Framework\TestCase
             $ol->toArray()
         );
     }
+
+    public function testInsertDuplicates()
+    {
+        $ol = new OrderedListString();
+        $ol->insert('dog', 'cat', 'dog', 'fox');
+        $ol->insert('fox');
+        $this->assertEquals(
+            ['cat', 'dog', 'dog', 'fox', 'fox'],
+            $ol->toArray()
+        );
+    }
 }
