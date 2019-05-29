@@ -2,9 +2,7 @@
 
 namespace DanBallance\DataAlgorithms;
 
-use InvalidArgumentException;
-
-class OrderedListNumeric extends OrderedList
+class SortedListString extends SortedList
 {
     public function __construct(
         bool $reversed = false,
@@ -22,23 +20,17 @@ class OrderedListNumeric extends OrderedList
         );
         if (!$this->cbTypeCheck) {
             $this->cbTypeCheck = function ($value) {
-                return is_numeric($value);
+                return is_string($value);
             };
         }
         if (!$this->cbSort) {
             $this->cbSort = function ($a, $b) {
-                if ($a == $b) {
-                    return 0;
-                }
-                return ($a < $b) ? -1 : 1;
+                return strcmp($a, $b);
             };
         }
         if (!$this->cbSortRev) {
             $this->cbSortRev = function ($a, $b) {
-                if ($a == $b) {
-                    return 0;
-                }
-                return ($a > $b) ? -1 : 1;
+                return strcmp($a, $b) * -1;
             };
         }
     }

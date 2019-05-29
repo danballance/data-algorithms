@@ -2,171 +2,171 @@
 
 namespace DanBallance\DataAlgorithms\Tests;
 
-use DanBallance\DataAlgorithms\OrderedList;
+use DanBallance\DataAlgorithms\SortedList;
 use InvalidArgumentException;
 
-class OrderedListCustomTest extends \PHPUnit\Framework\TestCase
+class SortedListCustomTest extends \PHPUnit\Framework\TestCase
 {
     public function testInsertSingleValue()
     {
-        $ol = $this->getCustomList();
+        $sortedList = $this->getCustomList();
         $objDog = (object)['name' => 'dog'];
-        $ol->insert($objDog);
+        $sortedList->insert($objDog);
         $this->assertEquals(
             [$objDog],
-            $ol->toArray()
+            $sortedList->toArray()
         );
         $objCat = (object)['name' => 'cat'];
-        $ol->insert($objCat);
+        $sortedList->insert($objCat);
         $this->assertEquals(
             [$objCat, $objDog],
-            $ol->toArray()
+            $sortedList->toArray()
         );
         $objFox = (object)['name' => 'fox'];
-        $ol->insert($objFox);
+        $sortedList->insert($objFox);
         $this->assertEquals(
             [$objCat, $objDog, $objFox],
-            $ol->toArray()
+            $sortedList->toArray()
         );
     }
 
     public function testInsertMultipleValues()
     {
-        $ol = $this->getCustomList();
+        $sortedList = $this->getCustomList();
         $objDog = (object)['name' => 'dog'];
         $objCat = (object)['name' => 'cat'];
         $objFox = (object)['name' => 'fox'];
-        $ol->insert($objDog, $objCat, $objFox);
+        $sortedList->insert($objDog, $objCat, $objFox);
         $this->assertEquals(
             [$objCat, $objDog, $objFox],
-            $ol->toArray()
+            $sortedList->toArray()
         );
     }
 
     public function testInsertMultipleValuesReversed()
     {
-        $ol = $this->getCustomList($reversed = true);
+        $sortedList = $this->getCustomList($reversed = true);
         $objDog = (object)['name' => 'dog'];
         $objCat = (object)['name' => 'cat'];
         $objFox = (object)['name' => 'fox'];
-        $ol->insert($objDog, $objCat, $objFox);
+        $sortedList->insert($objDog, $objCat, $objFox);
         $this->assertEquals(
             [$objFox, $objDog, $objCat],
-            $ol->toArray()
+            $sortedList->toArray()
         );
     }
 
     public function testInsertMultipleValuesReversedAndReverted()
     {
-        $ol = $this->getCustomList($reversed = true);
+        $sortedList = $this->getCustomList($reversed = true);
         $objDog = (object)['name' => 'dog'];
         $objCat = (object)['name' => 'cat'];
         $objFox = (object)['name' => 'fox'];
-        $ol->insert($objDog, $objCat, $objFox);
+        $sortedList->insert($objDog, $objCat, $objFox);
         $this->assertEquals(
             [$objFox, $objDog, $objCat],
-            $ol->toArray()
+            $sortedList->toArray()
         );
-        $ol->reverse(false);
+        $sortedList->reverse(false);
         $this->assertEquals(
             [$objCat, $objDog, $objFox],
-            $ol->toArray()
+            $sortedList->toArray()
         );
     }
 
     public function testDeleteSingleValue()
     {
-        $ol = $this->getCustomList();
+        $sortedList = $this->getCustomList();
         $objDog = (object)['name' => 'dog'];
         $objCat = (object)['name' => 'cat'];
         $objFox = (object)['name' => 'fox'];
-        $ol->insert($objDog, $objCat, $objFox);
-        $ol->delete($objDog);
+        $sortedList->insert($objDog, $objCat, $objFox);
+        $sortedList->delete($objDog);
         $this->assertEquals(
             [$objCat, $objFox],
-            $ol->toArray()
+            $sortedList->toArray()
         );
     }
 
     public function testDeleteMultipleValues()
     {
-        $ol = $this->getCustomList();
+        $sortedList = $this->getCustomList();
         $objDog = (object)['name' => 'dog'];
         $objCat = (object)['name' => 'cat'];
         $objFox = (object)['name' => 'fox'];
-        $ol->insert($objDog, $objCat, $objFox);
-        $ol->delete($objDog, $objFox);
+        $sortedList->insert($objDog, $objCat, $objFox);
+        $sortedList->delete($objDog, $objFox);
         $this->assertEquals(
             [$objCat],
-            $ol->toArray()
+            $sortedList->toArray()
         );
     }
 
     public function testDeleteAtIndex()
     {
-        $ol = $this->getCustomList();
+        $sortedList = $this->getCustomList();
         $objDog = (object)['name' => 'dog'];
         $objCat = (object)['name' => 'cat'];
         $objFox = (object)['name' => 'fox'];
-        $ol->insert($objDog, $objCat, $objFox);
-        $ol->deleteAt(1);
+        $sortedList->insert($objDog, $objCat, $objFox);
+        $sortedList->deleteAt(1);
         $this->assertEquals(
             [$objCat, $objFox],
-            $ol->toArray()
+            $sortedList->toArray()
         );
     }
 
     public function testInsertingInvalidTypes()
     {
         $this->expectException(InvalidArgumentException::class);
-        $ol = $this->getCustomList();
+        $sortedList = $this->getCustomList();
         $objDog = (object)['name' => 'dog'];
         $objCat = (object)['name' => 'cat'];
         $objFox = (object)['name' => 'fox'];
-        $ol->insert($objDog, $objCat, $objFox, 123);
+        $sortedList->insert($objDog, $objCat, $objFox, 123);
     }
 
     public function testInsertingInvalidTypesErrorsSurpressed()
     {
-        $ol = $this->getCustomList($reveresed = false, $throwTypeErrors = false);
+        $sortedList = $this->getCustomList($reveresed = false, $throwTypeErrors = false);
         $objDog = (object)['name' => 'dog'];
         $objCat = (object)['name' => 'cat'];
         $objFox = (object)['name' => 'fox'];
-        $ol->insert($objDog, $objCat, $objFox, 123);
+        $sortedList->insert($objDog, $objCat, $objFox, 123);
         $this->assertEquals(
             [$objCat, $objDog, $objFox],
-            $ol->toArray()
-        );
-    }
-
-    protected function getCustomList($reversed = false, $throwTypeErrors = true)
-    {
-        return new OrderedList(
-            $reversed,
-            $throwTypeErrors,
-            $cbTypeCheck = function($value) {
-                return is_object($value);
-            },
-            $cbSort = function($a, $b) {
-                return strcmp($a->name, $b->name);
-            },
-            $cbSortRev = function($a, $b) {
-                return strcmp($a->name, $b->name) * -1;
-            }
+            $sortedList->toArray()
         );
     }
 
     public function testInsertDuplicates()
     {
-        $ol = $this->getCustomList();
+        $sortedList = $this->getCustomList();
         $objDog = (object)['name' => 'dog'];
         $objCat = (object)['name' => 'cat'];
         $objFox = (object)['name' => 'fox'];
-        $ol->insert($objDog, $objCat, $objFox);
-        $ol->insert($objDog, $objFox);
+        $sortedList->insert($objDog, $objCat, $objFox);
+        $sortedList->insert($objDog, $objFox);
         $this->assertEquals(
             [$objCat, $objDog, $objDog, $objFox, $objFox],
-            $ol->toArray()
+            $sortedList->toArray()
+        );
+    }
+
+    protected function getCustomList($reversed = false, $throwTypeErrors = true)
+    {
+        return new SortedList(
+            $reversed,
+            $throwTypeErrors,
+            $cbTypeCheck = function ($value) {
+                return is_object($value);
+            },
+            $cbSort = function ($a, $b) {
+                return strcmp($a->name, $b->name);
+            },
+            $cbSortRev = function ($a, $b) {
+                return strcmp($a->name, $b->name) * -1;
+            }
         );
     }
 }

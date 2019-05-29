@@ -2,10 +2,9 @@
 
 namespace DanBallance\DataAlgorithms;
 
-use DanBallance\DataAlgorithms\IndexedList;
 use InvalidArgumentException;
 
-class OrderedList extends DataStructure
+class SortedList extends DataStructure
 {
     protected $reversed = false;
     protected $throwTypeErrors = true;
