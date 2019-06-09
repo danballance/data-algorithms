@@ -1,6 +1,6 @@
 # Data Algorithms
 
-![Travis (.org)](https://img.shields.io/travis/danballance/data-algorithms.svg)
+![Travis(.com)](https://travis-ci.com/danballance/data-algorithms.svg?branch=master)
 
 A PHP library that provides a set of useful data structures and algorithms.
 
