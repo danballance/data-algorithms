@@ -8,20 +8,23 @@ class SortedList extends DataStructure
 {
     protected $reversed = false;
     protected $throwTypeErrors = true;
-    protected $cbTypeCheck = null;
-    protected $cbSort = null;
-    protected $cbSortRev = null;
-
+    protected $cbTypeCheck;
+    protected $cbCompare;
+    protected $cbSort;
+    protected $cbSortRev;
+ 
     public function __construct(
         bool $reversed = false,
         bool $throwTypeErrors = true,
         callable $cbTypeCheck = null,
+        callable $cbCompare = null,
         callable $cbSort = null,
         callable $cbSortRev = null
     ) {
         $this->reversed = $reversed;
         $this->throwTypeErrors = $throwTypeErrors;
         $this->cbTypeCheck = $cbTypeCheck;
+        $this->cbCompare = $cbCompare;
         $this->cbSort = $cbSort;
         $this->cbSortRev = $cbSortRev;
     }
@@ -61,6 +64,29 @@ class SortedList extends DataStructure
     {
         unset($this->data[$index]);
         $this->sort();
+    }
+
+    public function find($needle)
+    {
+        $compare = $this->cbCompare;
+        $recursiveFind = function(array $data) use ($needle, &$recursiveFind, $compare) {
+            if (empty($data)) {
+                return null;
+            }
+            $midIndex = floor(count($data) / 2);
+            $value = $data[$midIndex];
+            $result = $compare($needle, $value);
+            if ($result > 0) {
+                $data = array_slice($data, $midIndex);
+                return $recursiveFind($data);
+            } elseif ($result < 0) {
+                $data = array_slice($data, 0, ($midIndex - 1));
+                return $recursiveFind($data);
+            } else {  // == 0
+                return $value;
+            }
+        };
+        return $recursiveFind($this->data);
     }
 
     protected function filter(array $data = [])

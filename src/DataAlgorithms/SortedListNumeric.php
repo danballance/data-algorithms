@@ -10,6 +10,7 @@ class SortedListNumeric extends SortedList
         bool $reversed = false,
         bool $throwTypeErrors = true,
         callable $cbTypeCheck = null,
+        callable $cbCompare = null,
         callable $cbSort = null,
         callable $cbSortRev = null
     ) {
@@ -17,12 +18,21 @@ class SortedListNumeric extends SortedList
             $reversed,
             $throwTypeErrors,
             $cbTypeCheck,
+            $cbCompare,
             $cbSort,
             $cbSortRev
         );
         if (!$this->cbTypeCheck) {
             $this->cbTypeCheck = function ($value) {
                 return is_numeric($value);
+            };
+        }
+        if (!$this->cbCompare) {
+            $this->cbCompare = function ($a, $b) {
+                if ($a == $b) {
+                    return 0;
+                }
+                return ($a < $b) ? -1 : 1;
             };
         }
         if (!$this->cbSort) {
