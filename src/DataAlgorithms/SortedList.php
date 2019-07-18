@@ -4,7 +4,12 @@ namespace DanBallance\DataAlgorithms;
 
 use InvalidArgumentException;
 
-class SortedList extends DataStructure
+/**
+ * Batch insert pretty fast.
+ * Single insertions very slow for large data sets.
+ * If the data can be passed as an array to the class then searches by key are very fast
+ */
+class SortedList extends DataStructure implements DataStructureInterface
 {
     protected $reversed = false;
     protected $throwTypeErrors = true;
@@ -12,6 +17,7 @@ class SortedList extends DataStructure
     protected $cbCompare;
     protected $cbSort;
     protected $cbSortRev;
+    protected $validateInsert = true;
  
     public function __construct(
         bool $reversed = false,
@@ -19,7 +25,8 @@ class SortedList extends DataStructure
         callable $cbTypeCheck = null,
         callable $cbCompare = null,
         callable $cbSort = null,
-        callable $cbSortRev = null
+        callable $cbSortRev = null,
+        bool $validateInsert = true
     ) {
         $this->reversed = $reversed;
         $this->throwTypeErrors = $throwTypeErrors;
@@ -27,6 +34,7 @@ class SortedList extends DataStructure
         $this->cbCompare = $cbCompare;
         $this->cbSort = $cbSort;
         $this->cbSortRev = $cbSortRev;
+        $this->validateInsert = $validateInsert;
     }
 
     public function reverse(bool $on = true)
@@ -37,7 +45,9 @@ class SortedList extends DataStructure
 
     public function insert(...$values)
     {
-        $values = $this->filter($values);
+        if ($this->validateInsert) {
+            $values = $this->filter($values);
+        }
         if (count($values) == 1) {
             $this->data[] = $values[0];
         } else {
@@ -66,21 +76,23 @@ class SortedList extends DataStructure
         $this->sort();
     }
 
-    public function find($needle)
+    public function search($key)
     {
         $compare = $this->cbCompare;
-        $recursiveFind = function(array $data) use ($needle, &$recursiveFind, $compare) {
+        $recursiveFind = function(array $data) use ($key, &$recursiveFind, $compare) {
             if (empty($data)) {
                 return null;
             }
             $midIndex = floor(count($data) / 2);
             $value = $data[$midIndex];
-            $result = $compare($needle, $value);
-            if ($result > 0) {
-                $data = array_slice($data, $midIndex);
+            $result = $compare($key, $value);
+            if ($midIndex === 0 && $result !== 0) {
+                return null;
+            } elseif ($result > 0) {
+                $data = array_slice($data, $midIndex + 1);
                 return $recursiveFind($data);
             } elseif ($result < 0) {
-                $data = array_slice($data, 0, ($midIndex - 1));
+                $data = array_slice($data, 0, ($midIndex));
                 return $recursiveFind($data);
             } else {  // == 0
                 return $value;

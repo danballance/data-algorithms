@@ -6,7 +6,7 @@ A PHP library that provides a set of useful data structures and algorithms.
 
 ## Installation
 
-Use the package manager [composer](https://getcomposer.org/) to install foobar.
+Use the package manager [composer](https://getcomposer.org/) to install.
 
 ```bash
 composer require danballance/data-algorithms

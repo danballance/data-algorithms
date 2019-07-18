@@ -131,7 +131,7 @@ class SortedListNumericTest extends \PHPUnit\Framework\TestCase
         $sortedList->insert(1, 3, 4, 7, 10, 13, 17, 18, 20);
         $this->assertEquals(
             7,
-            $sortedList->find(7)
+            $sortedList->search(7)
         );
     }
 }

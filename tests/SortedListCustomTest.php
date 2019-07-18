@@ -10,22 +10,22 @@ class SortedListCustomTest extends \PHPUnit\Framework\TestCase
     public function testInsertSingleValue()
     {
         $sortedList = $this->getCustomList();
-        $objDog = (object)['name' => 'dog'];
-        $sortedList->insert($objDog);
+        $objD = (object)['name' => 'ddd'];
+        $sortedList->insert($objD);
         $this->assertEquals(
-            [$objDog],
+            [$objD],
             $sortedList->toArray()
         );
-        $objCat = (object)['name' => 'cat'];
-        $sortedList->insert($objCat);
+        $objC = (object)['name' => 'ccc'];
+        $sortedList->insert($objC);
         $this->assertEquals(
-            [$objCat, $objDog],
+            [$objC, $objD],
             $sortedList->toArray()
         );
-        $objFox = (object)['name' => 'fox'];
-        $sortedList->insert($objFox);
+        $objF = (object)['name' => 'fff'];
+        $sortedList->insert($objF);
         $this->assertEquals(
-            [$objCat, $objDog, $objFox],
+            [$objC, $objD, $objF],
             $sortedList->toArray()
         );
     }
@@ -33,12 +33,12 @@ class SortedListCustomTest extends \PHPUnit\Framework\TestCase
     public function testInsertMultipleValues()
     {
         $sortedList = $this->getCustomList();
-        $objDog = (object)['name' => 'dog'];
-        $objCat = (object)['name' => 'cat'];
-        $objFox = (object)['name' => 'fox'];
-        $sortedList->insert($objDog, $objCat, $objFox);
+        $objD = (object)['name' => 'ddd'];
+        $objC = (object)['name' => 'ccc'];
+        $objF = (object)['name' => 'fff'];
+        $sortedList->insert($objD, $objC, $objF);
         $this->assertEquals(
-            [$objCat, $objDog, $objFox],
+            [$objC, $objD, $objF],
             $sortedList->toArray()
         );
     }
@@ -46,12 +46,12 @@ class SortedListCustomTest extends \PHPUnit\Framework\TestCase
     public function testInsertMultipleValuesReversed()
     {
         $sortedList = $this->getCustomList($reversed = true);
-        $objDog = (object)['name' => 'dog'];
-        $objCat = (object)['name' => 'cat'];
-        $objFox = (object)['name' => 'fox'];
-        $sortedList->insert($objDog, $objCat, $objFox);
+        $objD = (object)['name' => 'ddd'];
+        $objC = (object)['name' => 'ccc'];
+        $objF = (object)['name' => 'fff'];
+        $sortedList->insert($objD, $objC, $objF);
         $this->assertEquals(
-            [$objFox, $objDog, $objCat],
+            [$objF, $objD, $objC],
             $sortedList->toArray()
         );
     }
@@ -59,17 +59,17 @@ class SortedListCustomTest extends \PHPUnit\Framework\TestCase
     public function testInsertMultipleValuesReversedAndReverted()
     {
         $sortedList = $this->getCustomList($reversed = true);
-        $objDog = (object)['name' => 'dog'];
-        $objCat = (object)['name' => 'cat'];
-        $objFox = (object)['name' => 'fox'];
-        $sortedList->insert($objDog, $objCat, $objFox);
+        $objD = (object)['name' => 'ddd'];
+        $objC = (object)['name' => 'ccc'];
+        $objF = (object)['name' => 'fff'];
+        $sortedList->insert($objD, $objC, $objF);
         $this->assertEquals(
-            [$objFox, $objDog, $objCat],
+            [$objF, $objD, $objC],
             $sortedList->toArray()
         );
         $sortedList->reverse(false);
         $this->assertEquals(
-            [$objCat, $objDog, $objFox],
+            [$objC, $objD, $objF],
             $sortedList->toArray()
         );
     }
@@ -77,13 +77,13 @@ class SortedListCustomTest extends \PHPUnit\Framework\TestCase
     public function testDeleteSingleValue()
     {
         $sortedList = $this->getCustomList();
-        $objDog = (object)['name' => 'dog'];
-        $objCat = (object)['name' => 'cat'];
-        $objFox = (object)['name' => 'fox'];
-        $sortedList->insert($objDog, $objCat, $objFox);
-        $sortedList->delete($objDog);
+        $objD = (object)['name' => 'ddd'];
+        $objC = (object)['name' => 'ccc'];
+        $objF = (object)['name' => 'fff'];
+        $sortedList->insert($objD, $objC, $objF);
+        $sortedList->delete($objD);
         $this->assertEquals(
-            [$objCat, $objFox],
+            [$objC, $objF],
             $sortedList->toArray()
         );
     }
@@ -91,13 +91,13 @@ class SortedListCustomTest extends \PHPUnit\Framework\TestCase
     public function testDeleteMultipleValues()
     {
         $sortedList = $this->getCustomList();
-        $objDog = (object)['name' => 'dog'];
-        $objCat = (object)['name' => 'cat'];
-        $objFox = (object)['name' => 'fox'];
-        $sortedList->insert($objDog, $objCat, $objFox);
-        $sortedList->delete($objDog, $objFox);
+        $objD = (object)['name' => 'ddd'];
+        $objC = (object)['name' => 'ccc'];
+        $objF = (object)['name' => 'fff'];
+        $sortedList->insert($objD, $objC, $objF);
+        $sortedList->delete($objD, $objF);
         $this->assertEquals(
-            [$objCat],
+            [$objC],
             $sortedList->toArray()
         );
     }
@@ -105,13 +105,13 @@ class SortedListCustomTest extends \PHPUnit\Framework\TestCase
     public function testDeleteAtIndex()
     {
         $sortedList = $this->getCustomList();
-        $objDog = (object)['name' => 'dog'];
-        $objCat = (object)['name' => 'cat'];
-        $objFox = (object)['name' => 'fox'];
-        $sortedList->insert($objDog, $objCat, $objFox);
+        $objD = (object)['name' => 'ddd'];
+        $objC = (object)['name' => 'ccc'];
+        $objF = (object)['name' => 'fff'];
+        $sortedList->insert($objD, $objC, $objF);
         $sortedList->deleteAt(1);
         $this->assertEquals(
-            [$objCat, $objFox],
+            [$objC, $objF],
             $sortedList->toArray()
         );
     }
@@ -120,21 +120,21 @@ class SortedListCustomTest extends \PHPUnit\Framework\TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $sortedList = $this->getCustomList();
-        $objDog = (object)['name' => 'dog'];
-        $objCat = (object)['name' => 'cat'];
-        $objFox = (object)['name' => 'fox'];
-        $sortedList->insert($objDog, $objCat, $objFox, 123);
+        $objD = (object)['name' => 'ddd'];
+        $objC = (object)['name' => 'ccc'];
+        $objF = (object)['name' => 'fff'];
+        $sortedList->insert($objD, $objC, $objF, 123);
     }
 
     public function testInsertingInvalidTypesErrorsSurpressed()
     {
         $sortedList = $this->getCustomList($reveresed = false, $throwTypeErrors = false);
-        $objDog = (object)['name' => 'dog'];
-        $objCat = (object)['name' => 'cat'];
-        $objFox = (object)['name' => 'fox'];
-        $sortedList->insert($objDog, $objCat, $objFox, 123);
+        $objD = (object)['name' => 'ddd'];
+        $objC = (object)['name' => 'ccc'];
+        $objF = (object)['name' => 'fff'];
+        $sortedList->insert($objD, $objC, $objF, 123);
         $this->assertEquals(
-            [$objCat, $objDog, $objFox],
+            [$objC, $objD, $objF],
             $sortedList->toArray()
         );
     }
@@ -142,18 +142,18 @@ class SortedListCustomTest extends \PHPUnit\Framework\TestCase
     public function testInsertDuplicates()
     {
         $sortedList = $this->getCustomList();
-        $objDog = (object)['name' => 'dog'];
-        $objCat = (object)['name' => 'cat'];
-        $objFox = (object)['name' => 'fox'];
-        $sortedList->insert($objDog, $objCat, $objFox);
-        $sortedList->insert($objDog, $objFox);
+        $objD = (object)['name' => 'ddd'];
+        $objC = (object)['name' => 'ccc'];
+        $objF = (object)['name' => 'fff'];
+        $sortedList->insert($objD, $objC, $objF);
+        $sortedList->insert($objD, $objF);
         $this->assertEquals(
-            [$objCat, $objDog, $objDog, $objFox, $objFox],
+            [$objC, $objD, $objD, $objF, $objF],
             $sortedList->toArray()
         );
     }
 
-    public function testFind()
+    public function testSearch()
     {
         $sortedList = $this->getCustomList();
         $obj1 = (object)['name' => 'kkk', 'val' => 12];
@@ -174,15 +174,15 @@ class SortedListCustomTest extends \PHPUnit\Framework\TestCase
         );
         $this->assertEquals(
             108,
-            $sortedList->find('lll')->val
+            $sortedList->search('lll')->val
         );
         $this->assertEquals(
             12,
-            $sortedList->find('kkk')->val
+            $sortedList->search('kkk')->val
         );
         $this->assertEquals(
             5,
-            $sortedList->find('jjj')->val
+            $sortedList->search('jjj')->val
         );
     }
 
